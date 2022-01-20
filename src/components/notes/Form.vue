@@ -9,6 +9,7 @@
     />
     <button class="btn" type="submit">Add new note</button>
   </form>
+
 </template>
 
 
@@ -20,9 +21,11 @@ export default {
     }
   },
 
+
   methods: {
     onSubmit() {
       this.$emit('onSubmit', this.value)
+      // this.$emit('test', 20)
       this.value = ''
     }
   }
