@@ -1,17 +1,11 @@
 <template>
+  <h1 class="mb-3">Add new note</h1>
 
-    <h1 class="mb-3 ">Home page</h1>
+  <Form @onSubmit="handleSubmit" />
 
-    <Form @onSubmit="handleSubmit" />
-
-    <!-- Передаем через props данные из массива notes в дочерний компонент -->
-    <List @onRemove="handleRemove" :items="notes"/>
-    
-
-    
-  
+  <!-- Передаем через props данные из массива notes в дочерний компонент -->
+  <List @onRemove="handleRemove" :items="notes" />
 </template>
-
 
 <script>
 import Form from '@/components/notes/Form'
@@ -25,19 +19,50 @@ export default {
 
   data() {
     return {
-      notes: ['task1 ', 'task 2', 'task 3']
+      notes: [
+        { title: 'Learn vue 3', tags: ['work'] },
+        { title: 'Finish this course', tags: ['work', 'home'] },
+        { title: 'Test', tags: [] }
+      ]
     }
   },
 
-  methods: {
-      handleSubmit(value) {
-          this.notes.push(value)
-      },
+  watch: {
+    notes: {
+      handler(list) {
+        // console.log(list)
 
-      handleRemove(index) {
-        this.notes.splice(index, 1)
+        localStorage.setItem('notes', JSON.stringify(list))
+      },
+      deep: true
+    }
+  },
+
+  // Рендерим на экран список
+  mounted() {
+    this.getList()
+  },
+
+  methods: {
+    // Добавляем заметку
+    handleSubmit(value) {
+      const note = { title: value, tags: [] }
+
+      this.notes.push(note)
+    },
+    // Удаляем заметку
+    handleRemove(index) {
+      this.notes.splice(index, 1)
+    },
+    getList() {
+      const notesFromLS = localStorage.getItem('notes')
+
+      if (notesFromLS) {
+        this.notes = JSON.parse(notesFromLS)
+      } else {
+        this.notes
       }
-  
+    }
   }
 }
 </script>
