@@ -1,6 +1,6 @@
 <template>
     <div class="tag-list">
-        <div class="tag-list__item" :class="{isPreview: isPreview}" v-for="item in items" :key="item" @click="$emit('onItemClick', item)"><span>{{ item }}</span></div>
+        <div class="tag-list__item" :class="{isPreview: isPreview, isActive: isActive}" v-for="item in items" :key="item.title" @click="$emit('onItemClick', item, isActive)"><span>{{ item }}</span></div>
     </div>
 </template>
 
@@ -14,8 +14,18 @@ export default {
         isPreview: {
             type: Boolean,
             default: false
+        },
+
+        // как менять этот флаг?
+        // Что-то нужно передать из родителя сюда, что будет тригерить этот флаг
+        // Сравнивать два массива?
+        isActive: {
+            type: Boolean,
+            default: false
         }
-    }
+    
+    },
+
 }
 </script>
 
@@ -36,6 +46,7 @@ export default {
  
         cursor: pointer;
 
+        // Класс для тэгов, которые в листе задач
         &.isPreview {
             cursor: default;
             font-size: 0.875rem;
@@ -43,6 +54,10 @@ export default {
             &:before {
                 content: '#';
             }
+        }
+
+        &.isActive {
+            font-weight: 600;
         }
     
 }

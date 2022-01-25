@@ -5,6 +5,7 @@
 
   <!-- Передаем через props данные из массива notes в дочерний компонент -->
   <List @onRemove="handleRemove" :items="notes" />
+
 </template>
 
 <script>

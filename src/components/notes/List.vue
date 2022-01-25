@@ -5,6 +5,8 @@
       <div v-if="note.tags  && note.tags.length > 0" class="note-list__tag">
 
         <!-- props items мы передаем в компонент TagList, в котором у нас есть цикл, который нам и рендерит в заметку нужные теги -->
+
+        <!-- Меняем isPreview с false на true -->
         <TagList isPreview :items="note.tags" />
 
       </div>
