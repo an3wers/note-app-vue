@@ -5,7 +5,6 @@
 
   <!-- Передаем через props данные из массива notes в дочерний компонент -->
   <List @onRemove="handleRemove" :items="notes" />
-
 </template>
 
 <script>
@@ -21,8 +20,11 @@ export default {
   data() {
     return {
       notes: [
-        { title: 'Learn vue 3', tags: ['work'] },
-        { title: 'Finish this course', tags: ['work', 'home'] },
+        { title: 'Learn vue 3', tags: [{ name: 'work' }] },
+        {
+          title: 'Finish this course',
+          tags: [{ name: 'work' }, { name: 'home' }]
+        },
         { title: 'Test', tags: [] }
       ]
     }
@@ -46,8 +48,9 @@ export default {
 
   methods: {
     // Добавляем заметку
-    handleSubmit(value) {
-      const note = { title: value, tags: [] }
+    handleSubmit(value, activeTags) {
+  
+      const note = { title: value, tags: activeTags}
 
       this.notes.push(note)
     },
