@@ -1,14 +1,10 @@
 <template>
-  <div class="note-list">
+  <div class="list-container note-list">
     <div class="note-list__item" v-for="(note, index) in items" :key="index">
       <div class="note-list__header">{{ note.title }}</div>
-      <div v-if="note.tags  && note.tags.length > 0" class="note-list__tag">
-
-        <!-- props items мы передаем в компонент TagList, в котором у нас есть цикл, который нам и рендерит в заметку нужные теги -->
-
+      <div v-if="note.tags && note.tags.length > 0" class="note-list__tag">
         <!-- Меняем isPreview с false на true -->
         <TagList isPreview :items="note.tags" />
-
       </div>
       <div class="note-list__footer">
         <span
@@ -16,7 +12,8 @@
             >Удалить</a
           ></span
         >
-        <span><a href="#">Изменить</a></span>
+        <!-- Изменение заметки -->
+        <!-- <span><a href="#">Изменить</a></span> -->
       </div>
     </div>
   </div>
@@ -29,23 +26,23 @@ export default {
     TagList
   },
 
-  //   Принимаем пропсы
   props: {
     items: {
       type: Array,
       required: true
     }
-  }
+  },
+  emits: ['onRemove']
 }
 </script>
 
 <style lang="scss">
 .note-list {
-  margin: 1rem 0;
+  padding: 2rem 0;
 }
 
 .note-list__item {
-  padding: 0.5rem 0;
+  padding: 1rem 0;
   border-bottom: 1px solid #c0c0c0;
 }
 

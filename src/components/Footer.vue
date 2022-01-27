@@ -9,6 +9,7 @@
             </li>
           </ul>
         </div>
+        <div class="desc-footer">Сделано на курсе "Vue.js 3"</div>
       </div>
     </div>
   </footer>

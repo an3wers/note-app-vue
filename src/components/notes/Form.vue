@@ -1,35 +1,35 @@
 <template>
-  <form @submit.prevent="onSubmit">
-    <textarea
-      class="form-control mb-3"
-      type="text"
-      required
-      v-model="value"
-      placeholder="Type your note"
-    />
-    <!--Передаем через пропс в TagList массив с тегами-->
-    <!-- Мне нужно по клику передать параметр в дочерний компонент -->
-    <TagList @onItemClick="handleClickTag" :items="tagsTwo" />
+  <div class="form-container">
+    <form @submit.prevent="onSubmit">
+      <textarea
+        class="form-control mb-3"
+        type="text"
+        required
+        v-model="value"
+        placeholder="Type your note"
+      />
 
-    <button class="btn" type="submit">Add new note</button>
-  </form>
+      <TagList @onItemClick="handleClickTag" :items="tags" />
+
+      <button class="btn" type="submit">Add new note</button>
+    </form>
+  </div>
 </template>
 
 <script>
 import TagList from '@/components/notes/TagList'
-// import {tagsTwo} from '@/main.js'
 
 export default {
   components: {
     TagList
   },
 
+  emits: ['onSubmit'],
+
   data() {
     return {
       value: '',
-      // tagsTwo: tagsTwo,
-      // tags: ['home', 'work', 'travel'],
-      tagsTwo: [
+      tags: [
         {
           id: 1,
           name: 'home',
@@ -46,8 +46,8 @@ export default {
           tagIsActive: false
         }
       ],
-      activeTags: [],
-      isActiveTag: false
+      activeTags: []
+      
     }
   },
 
@@ -55,21 +55,16 @@ export default {
     onSubmit() {
       this.$emit('onSubmit', this.value, this.activeTags)
       this.value = ''
+      // Сбрасываем активное состояние Тэгов
+      this.tags.forEach(el => {
+        el.tagIsActive = false
+      })
     },
-    handleClickTag(tag, isActive, id) {
-      // console.log(tag, active)
-      // Работает передачу булевого параметра, но отмечаются все табы, а не тот по которому кликнули
-      // if (active) {
-      //   this.isActiveTag = false
-      // } else {
-      //   return (this.isActiveTag = true)
-      // }
+    handleClickTag(id) {
+      const correnTagIndex = this.tags.findIndex(el => el.id === id)
 
-      const correnTagIndex = this.tagsTwo.findIndex(el => el.id === id)
-      console.log(this.tagsTwo)
-     
       if (correnTagIndex !== -1) {
-        const correntTag = this.tagsTwo[correnTagIndex]
+        const correntTag = this.tags[correnTagIndex]
         if (correntTag.tagIsActive) {
           correntTag.tagIsActive = false
 

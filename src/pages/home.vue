@@ -1,9 +1,10 @@
 <template>
-  <h1 class="mb-3">Add new note</h1>
+  <div class="header-container">
+    <h1 class="mb-3">Add new note</h1>
+  </div>
+  
 
   <Form @onSubmit="handleSubmit" />
-
-  <!-- Передаем через props данные из массива notes в дочерний компонент -->
   <List @onRemove="handleRemove" :items="notes" />
 </template>
 
@@ -19,6 +20,7 @@ export default {
 
   data() {
     return {
+      // Заметки по умолчанию
       notes: [
         { title: 'Learn vue 3', tags: [{ name: 'work' }] },
         {
@@ -33,15 +35,13 @@ export default {
   watch: {
     notes: {
       handler(list) {
-        // console.log(list)
-
+        
         localStorage.setItem('notes', JSON.stringify(list))
       },
       deep: true
     }
   },
 
-  // Рендерим на экран список
   mounted() {
     this.getList()
   },
@@ -49,8 +49,7 @@ export default {
   methods: {
     // Добавляем заметку
     handleSubmit(value, activeTags) {
-  
-      const note = { title: value, tags: activeTags}
+      const note = { title: value, tags: activeTags }
 
       this.notes.push(note)
     },
